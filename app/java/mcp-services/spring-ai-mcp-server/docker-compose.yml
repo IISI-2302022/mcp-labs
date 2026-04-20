@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  spring-ai-mcp-server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      additional_contexts:
+        parent: ../
+    image: spring-ai-mcp-server:latest
+    container_name: spring-ai-mcp-server
+    labels:
+      logger: vector
+    ports:
+      #      - "8989:8989"
+      - "18989:18989"
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:18989
+      my_kong_base_url: http://kong-gateway:8001
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4317"
+      OTEL_METRICS_EXPORTER: "none"
+      OTEL_SERVICE_NAME: "spring-ai-mcp-server"
+    restart: always
+    networks:
+      - mcp
+networks:
+  mcp:
+    external: true

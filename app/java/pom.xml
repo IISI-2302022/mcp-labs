@@ -110,7 +110,7 @@
     </build>
     <modules>
         <module>mcp-services</module>
-        <module>common</module>
+        <module>mcp-common</module>
     </modules>
 
 </project>
