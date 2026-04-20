@@ -6,7 +6,7 @@
         <groupId>com.iisigroup.df</groupId>
         <artifactId>mcp-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../java</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>mcp-services</artifactId>
     <packaging>pom</packaging>
