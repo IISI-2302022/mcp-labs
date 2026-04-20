@@ -14,20 +14,20 @@ spring:
         enabled: true
         name: ${spring.application.name}
         initialized: true
-        type: sync
+        type: async
         toolcallback:
           enabled: true
-        sse:
+        streamable-http:
           connections:
             mcp-server:
-              url: ${spring_ai_mcp_client_sse_connections_example_url:http://localhost:8000/mcp-server/demo}
+              url: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_url:http://localhost:8000/mcp-server/demo}
+              endpoint: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_endpoint:/streamable-http}
     openai:
       api-key: ${spring_ai_openai_api_key:noUse}
-      base-url: ${spring_ai_openai_base_url:http://localhost:8000}
+      base-url: ${spring_ai_openai_base_url:https://api.openai.com}
       chat:
-        completions-path: ${spring_ai_openai_chat_completions_path:/llm/gemini}
+        completions-path: ${spring_ai_openai_chat_completions_path:/v1/chat/completions}
         options:
-          model: ${spring_ai_openai_chat_options_model:gemini-1.5-flash}
-
+          model: ${spring_ai_openai_chat_options_model:gpt-4o}
 server:
   port: 8987

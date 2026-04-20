@@ -9,6 +9,7 @@ spring:
     mcp:
       server:
         name: ${spring.application.name}
+        protocol: streamable
 
 server:
   port: 8989

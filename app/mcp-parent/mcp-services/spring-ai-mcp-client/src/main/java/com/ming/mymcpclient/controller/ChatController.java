@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.util.Map;
+
 
 @Slf4j
 @RequestMapping("/chat")
@@ -38,6 +40,8 @@ public class ChatController {
                         advisorSpec
                                 .param(ChatMemory.CONVERSATION_ID, contextId)
                 )
+                // 可以傳送到 mcp server
+                .toolContext(Map.of("a", "b"))
                 .call()
                 .content();
     }
