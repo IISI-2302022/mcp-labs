@@ -1,8 +1,6 @@
 package com.ming.mymcpserver.tool;
 
-import com.ming.mymcpserver.label.AutoRegisterMcpTool;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Component;
