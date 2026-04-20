@@ -11,17 +11,19 @@ spring:
         host: ${spring_ai_memory_redis_host:127.0.0.1}
     mcp:
       client:
-        enabled: true
         name: ${spring.application.name}
-        initialized: true
-        type: async
+        enabled: true
         toolcallback:
           enabled: true
+        initialized: true
+        type: async
         streamable-http:
           connections:
             mcp-server:
-              url: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_url:http://localhost:8000/mcp-server/demo}
-              endpoint: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_endpoint:/streamable-http}
+              url: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_url:http://localhost:8989}
+              endpoint: ${spring_ai_mcp_client_streamable_http_connections_mcp_server_endpoint:/mcp}
+        annotation-scanner:
+          enabled: true
     openai:
       api-key: ${spring_ai_openai_api_key:noUse}
       base-url: ${spring_ai_openai_base_url:https://api.openai.com}

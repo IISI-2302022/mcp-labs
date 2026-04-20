@@ -10,7 +10,16 @@ spring:
       server:
         name: ${spring.application.name}
         protocol: streamable
-
+        type: async
+        enabled: true
+        stdio: false
+        annotation-scanner:
+          enabled: true
+        capabilities:
+          tool: true
+        streamable-http:
+          mcp-endpoint: /mcp
+        tool-change-notification: true
 server:
   port: 8989
 
