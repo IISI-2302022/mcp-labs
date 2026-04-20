@@ -11,11 +11,15 @@ spring:
         host: ${spring_ai_memory_redis_host:127.0.0.1}
     mcp:
       client:
+        enabled: true
+        name: ${spring.application.name}
+        initialized: true
+        type: sync
         toolcallback:
           enabled: true
         sse:
           connections:
-            example:
+            mcp-server:
               url: ${spring_ai_mcp_client_sse_connections_example_url:http://localhost:8000/mcp-server/demo}
     openai:
       api-key: ${spring_ai_openai_api_key:noUse}
