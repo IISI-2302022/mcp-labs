@@ -1,0 +1,25 @@
+---
+spring:
+  config:
+    import: classpath:application-common.yml
+---
+spring:
+  application:
+    name: spring-ai-mcp-server-account
+  ai:
+    mcp:
+      server:
+        name: ${spring.application.name}
+        protocol: streamable
+        type: async
+        enabled: true
+        stdio: false
+        annotation-scanner:
+          enabled: true
+        capabilities:
+          tool: true
+        streamable-http:
+          mcp-endpoint: /mcp
+        tool-change-notification: true
+server:
+  port: 8989

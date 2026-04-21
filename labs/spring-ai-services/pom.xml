@@ -10,6 +10,9 @@
     </parent>
     <artifactId>spring-ai-services</artifactId>
     <packaging>pom</packaging>
+    <properties>
+        <springboot.skip>false</springboot.skip>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -32,6 +35,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <skip>${springboot.skip}</skip>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -46,5 +50,6 @@
         <module>../01-spring-ai-chat-gpt</module>
         <module>../02-spring-ai-tool-mcp/spring-ai-mcp-client</module>
         <module>../02-spring-ai-tool-mcp/spring-ai-mcp-server</module>
+        <module>../02-spring-ai-tool-mcp/spring-ai-mcp-server-account</module>
     </modules>
 </project>

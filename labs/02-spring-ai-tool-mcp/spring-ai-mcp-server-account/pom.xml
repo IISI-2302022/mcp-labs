@@ -6,18 +6,17 @@
         <groupId>com.iisigroup.df</groupId>
         <artifactId>spring-ai-services</artifactId>
         <version>1.0.0</version>
-        <relativePath>../spring-ai-services/pom.xml</relativePath>
+        <relativePath>../../spring-ai-services/pom.xml</relativePath>
     </parent>
-    <artifactId>spring-ai-chat-gpt</artifactId>
-    <properties>
-        <springboot.skip>true</springboot.skip>
-    </properties>
+    <artifactId>spring-ai-mcp-server-account</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-model-openai</artifactId>
+            <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springaicommunity</groupId>-->
+        <!--            <artifactId>mcp-server-security</artifactId>-->
+        <!--        </dependency>-->
     </dependencies>
-
-
 </project>
