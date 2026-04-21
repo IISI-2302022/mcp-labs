@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,7 +19,6 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final TransferRecordRepository transferRecordRepository;
-    private final TransactionTemplate transactionTemplate;
 
     public String getBalance(String accountNo) {
         val account = accountRepository.findByAccountNo(accountNo)

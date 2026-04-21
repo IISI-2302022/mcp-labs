@@ -33,9 +33,6 @@ public class AccountTool {
             @McpToolParam(description = "轉帳金額") BigDecimal amount) {
         log.info("執行轉帳: {} -> {}, 金額: {}", fromAccountNo, toAccountNo, amount);
         return Mono.fromCallable(() -> accountService.transfer(fromAccountNo, toAccountNo, amount))
-                .doOnError((throwable) -> {
-                    log.error(throwable.getLocalizedMessage(), throwable);
-                })
                 .subscribeOn(Schedulers.boundedElastic());
     }
 
