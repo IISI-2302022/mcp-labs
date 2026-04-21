@@ -1,4 +1,4 @@
-package com.ming.mymcpserver.api;
+package com.ming.mymcpserver.kong;
 
 import com.ming.mymcpserver.config.prop.KongAdminProperties;
 import org.springframework.core.ParameterizedTypeReference;

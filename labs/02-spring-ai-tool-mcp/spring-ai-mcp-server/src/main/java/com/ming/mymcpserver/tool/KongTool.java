@@ -1,6 +1,6 @@
 package com.ming.mymcpserver.tool;
 
-import com.ming.mymcpserver.api.KongAdminClient;
+import com.ming.mymcpserver.kong.KongAdminClient;
 import com.ming.mymcpserver.util.MapPathUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
