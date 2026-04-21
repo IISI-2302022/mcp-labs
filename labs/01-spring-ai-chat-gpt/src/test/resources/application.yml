@@ -1,0 +1,17 @@
+---
+spring:
+  config:
+    import: classpath:application-common.yml
+---
+
+spring:
+  application:
+    name: spring-ai-chat-gpt
+  ai:
+    openai:
+      api-key: ${spring_ai_openai_api_key:nothing}
+      base-url: ${spring_ai_openai_base_url:https://api.openai.com}
+      chat:
+        completions-path: ${spring_ai_openai_chat_completions_path:/v1/chat/completions}
+        options:
+          model: ${spring_ai_openai_chat_options_model:gpt-4o-mini}
