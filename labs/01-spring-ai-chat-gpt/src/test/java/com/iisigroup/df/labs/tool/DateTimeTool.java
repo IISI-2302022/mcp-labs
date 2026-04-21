@@ -23,17 +23,4 @@ public class DateTimeTool {
         System.out.println("Alarm set for " + alarmTime);
     }
 
-    @Tool(description = "UUID 產生器")
-    public String generateUUID(@ToolParam(required = false, description = "前幾碼") Integer length, ToolContext toolContext) {
-        val uuid = UUID.randomUUID().toString().replace("-", "");
-        if (length == null) {
-            length = (Integer) toolContext.getContext().get("defaultLength");
-        }
-        if (length >= uuid.length()) {
-            return uuid;
-        }
-        return uuid.substring(0, length);
-    }
-
-
 }

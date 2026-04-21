@@ -16,6 +16,8 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.StructuredOutputValidationAdvisor;
 import org.springframework.ai.chat.client.advisor.api.BaseAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.messages.SystemMessage;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.template.st.StTemplateRenderer;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 @Import({MemoryConfig.class, LoggingConfig.class})
 @MySpringBootTest
 public class ChatDemoTest {
+
     @DynamicPropertySource
     public static void setup(DynamicPropertyRegistry registry) {
         registry.add("spring_ai_openai_api_key", () -> "輸入自己的 API KEY");
@@ -51,7 +54,8 @@ public class ChatDemoTest {
 
     @PostConstruct
     public void init() {
-        this.client = builder.build();
+        this.client = builder
+                .build();
     }
 
     @Test
@@ -59,6 +63,7 @@ public class ChatDemoTest {
         val userPrompt = "你好";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
+                .system("你是一個最佳好友 , 叫小厚")
                 .user(userPrompt)
                 .call()
                 .content();
@@ -70,6 +75,7 @@ public class ChatDemoTest {
         val userPrompt = "你好";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
+                .system("你是一個最佳好友 , 叫小厚")
                 .user(userPrompt)
                 .stream()
                 .content();
@@ -83,19 +89,23 @@ public class ChatDemoTest {
         val userPrompt = "你好";
         log.info("request userPrompt: {}", userPrompt);
         val content = client
-                .prompt(new Prompt(userPrompt))
+                .prompt(
+                        new Prompt(
+                                new SystemMessage("你是一個最佳好友 , 叫小厚")
+                                , new UserMessage(userPrompt)
+                        )
+                )
                 .call()
                 .content();
         log.info("response content: {}", content);
     }
 
     @Test
-    public void syncChatReturnEntity() {
-        val userPrompt = "Generate the filmography for a random actor.";
+    public void syncChatForEntity() {
+        val userPrompt = "隨機生成台灣一位演員的作品集";
         log.info("request userPrompt: {}", userPrompt);
         val entity = client
-                .prompt()
-                .user(userPrompt)
+                .prompt(userPrompt)
                 .call()
                 .entity(ActorFilms.class);
         log.info("response content: {}", entity);
@@ -103,11 +113,10 @@ public class ChatDemoTest {
 
     @Test
     public void syncChatReturnEntityWithParameterizedType() {
-        val userPrompt = "Generate the filmography of 5 movies for Tom Hanks and Bill Murray.";
+        val userPrompt = "為台灣演員許光漢和林依晨各列出 5 部電影的作品集。";
         log.info("request userPrompt: {}", userPrompt);
         val entity = client
-                .prompt()
-                .user(userPrompt)
+                .prompt(userPrompt)
                 .call()
                 .entity(new ParameterizedTypeReference<List<ActorFilms>>() {
                 });
@@ -116,14 +125,15 @@ public class ChatDemoTest {
 
     @Test
     public void syncChatWithPromptTemplate() {
-        val userPrompt = "Tell me the names of 5 movies whose soundtrack was composed by {composer}";
+        val userPrompt = "請告訴我 5 部由 {composer} 創作配樂的電影名稱。";
 
         log.info("request userPrompt: {}", userPrompt);
 
         val content = this.client.prompt()
                 .user(u -> u
                         .text(userPrompt)
-                        .param("composer", "John Williams"))
+                        .param("composer", "周杰倫")
+                )
                 .call()
                 .content();
 
@@ -131,15 +141,16 @@ public class ChatDemoTest {
     }
 
     @Test
-    public void syncChatWithPromptTemplateAndReplacement() {
-        val userPrompt = "Tell me the names of 5 movies whose soundtrack was composed by <composer>";
+    public void syncChatWithPromptTemplateAndCustomReplacement() {
+        val userPrompt = "請告訴我 5 部由 <composer> 創作配樂的電影名稱。";
 
         log.info("request userPrompt: {}", userPrompt);
 
         val content = this.client.prompt()
                 .user(u -> u
                         .text(userPrompt)
-                        .param("composer", "John Williams"))
+                        .param("composer", "周杰倫")
+                )
                 .templateRenderer(
                         StTemplateRenderer.builder()
                                 .startDelimiterToken('<')
@@ -154,12 +165,12 @@ public class ChatDemoTest {
 
 
     @Test
-    public void asyncChatReturnEntityWithParameterizedType() {
+    public void asyncChatForEntityWithParameterizedType() {
         val converter = new BeanOutputConverter<>(new ParameterizedTypeReference<List<ActorFilms>>() {
         });
 
         val userPrompt = """
-                  Generate the filmography for a random actor.
+                  隨機生成台灣一位演員的作品集
                   {format}
                 """;
 
@@ -175,7 +186,9 @@ public class ChatDemoTest {
                 .stream()
                 .content();
 
-        val content = contentFlux.collectList().block().stream().collect(Collectors.joining());
+        val content = contentFlux.collectList().block()
+                .stream()
+                .collect(Collectors.joining());
 
         val actorFilms = converter.convert(content);
 
@@ -194,12 +207,11 @@ public class ChatDemoTest {
                 .advisorOrder(BaseAdvisor.HIGHEST_PRECEDENCE + 1000)
                 .build();
 
-        val userPrompt = "Generate the filmography of 5 movies for Tom Hanks and Bill Murray.";
+        val userPrompt = "為台灣演員許光漢和林依晨各列出 5 部電影的作品集。";
         log.info("request userPrompt: {}", userPrompt);
         val entity = client
-                .prompt()
+                .prompt(userPrompt)
                 .advisors(validationAdvisor)
-                .user(userPrompt)
                 .call()
                 .entity(parameterizedTypeReference);
 
@@ -226,8 +238,7 @@ public class ChatDemoTest {
         val userPrompt = "你好";
         log.info("request userPrompt: {}", userPrompt);
 
-        val content = client.prompt()
-                .user(userPrompt)
+        val content = client.prompt(userPrompt)
                 .advisors(simpleLoggerAdvisor)
                 .call()
                 .content();
@@ -255,7 +266,8 @@ public class ChatDemoTest {
                 .advisors((advisorSpec) ->
                         advisorSpec
                                 .advisors(messageChatMemoryAdvisor)
-                                .param(ChatMemory.CONVERSATION_ID, conversationId))
+                                .param(ChatMemory.CONVERSATION_ID, conversationId)
+                )
                 .call()
                 .content();
 
@@ -270,7 +282,8 @@ public class ChatDemoTest {
                 .advisors((advisorSpec) ->
                         advisorSpec
                                 .advisors(messageChatMemoryAdvisor)
-                                .param(ChatMemory.CONVERSATION_ID, conversationId))
+                                .param(ChatMemory.CONVERSATION_ID, conversationId)
+                )
                 .call()
                 .content();
 
@@ -279,7 +292,7 @@ public class ChatDemoTest {
     }
 
     @Test
-    public void syncChatWithFunctionCall() {
+    public void syncChatWithDateTimeTool1() {
         val userPrompt = "What day is tomorrow?";
 
         log.info("request userPrompt: {}", userPrompt);
@@ -294,7 +307,7 @@ public class ChatDemoTest {
     }
 
     @Test
-    public void syncChatWithFunctionCall1() {
+    public void syncChatWithDateTimeTool2() {
         val userPrompt = "Can you set an alarm 10 minutes from now?";
 
         log.info("request userPrompt: {}", userPrompt);
@@ -309,7 +322,7 @@ public class ChatDemoTest {
     }
 
     @Test
-    public void syncChatWithFunctionCallAndToolContext() {
+    public void syncChatWithUUIDToolAndToolContext() {
         val userPrompt = "產生 uuid";
 
         log.info("request userPrompt: {}", userPrompt);
@@ -318,6 +331,7 @@ public class ChatDemoTest {
                 .prompt(userPrompt)
                 .tools(new UUIDTool())
                 .toolContext(
+                        // 可以給 tool method 吃
                         Map.of("defaultLength", 5)
                 )
                 .call()
