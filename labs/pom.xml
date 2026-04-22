@@ -24,8 +24,8 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.iisigroup.df</groupId>
-            <artifactId>spring-ai-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -41,6 +41,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springaicommunity</groupId>
+                <artifactId>mcp-client-security</artifactId>
+                <version>${mcp-client-security.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springaicommunity</groupId>
                 <artifactId>mcp-server-security</artifactId>

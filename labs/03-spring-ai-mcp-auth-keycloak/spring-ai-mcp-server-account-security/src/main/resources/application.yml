@@ -1,0 +1,47 @@
+---
+spring:
+  config:
+    import: classpath:application-common.yml
+---
+spring:
+  application:
+    name: spring-ai-mcp-server-account
+  ai:
+    mcp:
+      server:
+        name: ${spring.application.name}
+        protocol: streamable
+        type: async
+        enabled: true
+        stdio: false
+        annotation-scanner:
+          enabled: true
+        capabilities:
+          tool: true
+        streamable-http:
+          mcp-endpoint: /mcp
+        tool-change-notification: true
+  datasource:
+    url: jdbc:h2:mem:accountdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: p@ssw0rd
+  #  h2:
+  #    console:
+  #      enabled: false
+  #      path: /h2-console
+  #      settings:
+  #        web-allow-others: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    database: h2
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+server:
+  port: 8989

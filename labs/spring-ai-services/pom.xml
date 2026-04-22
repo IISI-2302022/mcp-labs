@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.iisigroup.df</groupId>
+            <artifactId>spring-ai-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.iisigroup.df</groupId>
             <artifactId>spring-ai-common</artifactId>
         </dependency>
     </dependencies>
@@ -42,5 +47,7 @@
         <module>../02-spring-ai-tool-mcp/spring-ai-mcp-client</module>
         <module>../02-spring-ai-tool-mcp/spring-ai-mcp-server</module>
         <module>../02-spring-ai-tool-mcp/spring-ai-mcp-server-account</module>
+        <module>../03-spring-ai-mcp-auth-keycloak/spring-ai-mcp-client-security</module>
+        <module>../03-spring-ai-mcp-auth-keycloak/spring-ai-mcp-server-account-security</module>
     </modules>
 </project>
