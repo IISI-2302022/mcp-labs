@@ -24,8 +24,8 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>com.iisigroup.df</groupId>
+            <artifactId>spring-ai-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -74,6 +74,16 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.iisigroup.df</groupId>
+                <artifactId>spring-ai-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.iisigroup.df</groupId>
+                <artifactId>spring-ai-test</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -111,6 +121,7 @@
     <modules>
         <module>spring-ai-services</module>
         <module>spring-ai-common</module>
+        <module>spring-ai-test</module>
     </modules>
 
 </project>
