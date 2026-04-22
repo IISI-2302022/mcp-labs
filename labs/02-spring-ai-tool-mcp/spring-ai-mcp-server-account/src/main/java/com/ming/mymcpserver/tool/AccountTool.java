@@ -1,7 +1,6 @@
 package com.ming.mymcpserver.tool;
 
 import com.ming.mymcpserver.service.AccountService;
-import com.ming.mymcpserver.tool.label.AutoRegisterMcpTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springaicommunity.mcp.annotation.McpTool;
