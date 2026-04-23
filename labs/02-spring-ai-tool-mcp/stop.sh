@@ -12,4 +12,4 @@ else
   exit 1
 fi
 
-"${container_engine}" rm -f redis
+"${container_engine}" rm -f redis-02

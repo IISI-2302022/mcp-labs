@@ -35,7 +35,7 @@ mkdir -p "${THIS_SHELL_DIR}/redis/data"
 
 # redis
 "${container_engine}" run -d \
-  --name redis \
+  --name redis-02 \
   --network mcp-labs \
   --restart always \
   -p 6379:6379 \

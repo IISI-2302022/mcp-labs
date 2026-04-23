@@ -63,9 +63,9 @@ mkdir -p "${THIS_SHELL_DIR}/redis/data/"
 
 # redis
 "${container_engine}" run -d \
-  --name redis \
+  --name redis-03 \
   --network mcp-labs \
   --restart always \
-  -p 6379:6379 \
+  -p 6380:6379 \
   -v "${THIS_SHELL_DIR}/redis/data/:/data/" \
   redis:8.6.2
