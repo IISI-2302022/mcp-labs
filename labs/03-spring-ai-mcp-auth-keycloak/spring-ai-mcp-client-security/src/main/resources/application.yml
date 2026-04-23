@@ -26,6 +26,7 @@ spring:
     memory:
       redis:
         host: ${spring_ai_memory_redis_host:127.0.0.1}
+        port: ${spring_ai_memory_redis_port:6380}
     mcp:
       client:
         name: ${spring.application.name}
