@@ -3,6 +3,23 @@ spring:
     import: classpath:application-common.yml
 ---
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          auth-code:
+            provider: authserver
+            authorization-grant-type: authorization_code
+            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
+            client-id: mcp-client
+          client-credentials:
+            provider: authserver
+            authorization-grant-type: client_credentials
+            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
+            client-id: mcp-client
+        provider:
+          authserver:
+            issuer-uri: http://localhost:8080/realms/mcp
   application:
     name: spring-ai-mcp-client
   ai:
@@ -15,8 +32,8 @@ spring:
         enabled: true
         toolcallback:
           enabled: true
-        initialized: true
-        type: async
+        initialized: false
+        type: sync
         streamable-http:
           connections:
             mcp-server:

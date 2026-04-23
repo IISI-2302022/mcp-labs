@@ -20,12 +20,10 @@ public class ChatController {
     private final ChatClient chatClient;
 
     public ChatController(
-            MessageChatMemoryAdvisor memoryAdvisor,
             ChatClient.Builder chatClientBuilder,
             ToolCallbackProvider toolCallbackProvider
     ) {
         this.chatClient = chatClientBuilder
-                .defaultAdvisors(memoryAdvisor)
                 .defaultToolCallbacks(toolCallbackProvider)
                 .build();
     }

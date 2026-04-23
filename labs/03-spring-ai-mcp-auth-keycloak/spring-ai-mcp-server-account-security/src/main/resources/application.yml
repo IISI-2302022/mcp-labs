@@ -4,6 +4,11 @@ spring:
     import: classpath:application-common.yml
 ---
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/mcp
   application:
     name: spring-ai-mcp-server-account
   ai:
@@ -11,7 +16,7 @@ spring:
       server:
         name: ${spring.application.name}
         protocol: streamable
-        type: async
+        type: sync
         enabled: true
         stdio: false
         annotation-scanner:
@@ -44,4 +49,8 @@ spring:
       mode: always
       data-locations: classpath:data.sql
 server:
+  servlet:
+    session:
+      cookie:
+        name: MCP_SERVER_STREAMABLE_HTTP_SECURED_TOOLS_SESSIONID
   port: 8989
