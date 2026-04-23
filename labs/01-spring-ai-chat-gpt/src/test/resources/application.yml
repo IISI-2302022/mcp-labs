@@ -3,7 +3,6 @@ spring:
   config:
     import: classpath:application-common.yml
 ---
-
 spring:
   application:
     name: spring-ai-chat-gpt

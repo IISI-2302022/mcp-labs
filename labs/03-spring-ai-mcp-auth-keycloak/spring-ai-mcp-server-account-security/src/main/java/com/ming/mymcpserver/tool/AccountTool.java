@@ -31,7 +31,7 @@ public class AccountTool {
     @PreAuthorize("isAuthenticated()")
     @McpTool(description = "執行轉帳，從來源帳號轉指定金額到目標帳號，回傳轉帳結果")
     public String transfer(
-            @ToolParam(description = "轉出帳號", required = false) String fromAccountNo,
+            @ToolParam(description = "轉出帳號") String fromAccountNo,
             @ToolParam(description = "轉入帳號") String toAccountNo,
             @ToolParam(description = "轉帳金額") BigDecimal amount) {
         val authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -43,7 +43,9 @@ public class AccountTool {
     @PreAuthorize("isAuthenticated()")
     @McpTool(description = "查詢轉帳紀錄，輸入帳號查詢該帳號所有轉入與轉出紀錄")
     public String getTransferHistory(@ToolParam(description = "要查詢的帳號") String accountNo) {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
+        val inputOwerName = authentication.getName();
         log.info("查詢轉帳紀錄: accountNo={}", accountNo);
-        return accountService.getTransferHistory(accountNo);
+        return accountService.getTransferHistory(accountNo, inputOwerName);
     }
 }

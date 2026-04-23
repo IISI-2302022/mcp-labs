@@ -21,17 +21,20 @@ public class AccountService {
     private final TransferRecordRepository transferRecordRepository;
 
     public String getBalance(String accountNo, String inputOwerName) {
-        val account = accountRepository.findByAccountNo(accountNo)
-                .orElseThrow(() -> new RuntimeException("查無此帳號: " + accountNo));
+
+        val account = accountRepository.findByAccountNo(accountNo);
+        if (account == null) {
+            return String.format("查無此帳號: %s", accountNo);
+        }
 
         val ownerName = account.getOwnerName();
-
         if (!ownerName.equals(inputOwerName)) {
-            return String.format("查詢失敗：查詢操作者 與 帳戶擁有者 不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
+            return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
 
         return String.format("帳號: %s, 戶名: %s, 餘額: %s",
-                account.getAccountNo(), account.getOwnerName(), account.getBalance());
+                account.getAccountNo(), ownerName, account.getBalance()
+        );
     }
 
 
@@ -45,11 +48,9 @@ public class AccountService {
             return "轉帳失敗：金額必須大於 0";
         }
 
-        val from = accountRepository.findByAccountNo(fromAccountNo)
-                .orElseThrow(() -> new RuntimeException("查無轉出帳號: " + fromAccountNo));
-
-        if (from.getBalance().compareTo(amount) < 0) {
-            return String.format("轉帳失敗：餘額不足，目前餘額 %s，欲轉出 %s", from.getBalance(), amount);
+        val from = accountRepository.findByAccountNo(fromAccountNo);
+        if (from == null) {
+            return String.format("查無轉出帳號: %s", fromAccountNo);
         }
 
         val ownerName = from.getOwnerName();
@@ -57,8 +58,14 @@ public class AccountService {
             return String.format("轉帳失敗：轉帳操作者 與 轉出帳戶擁有者 不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
 
-        val to = accountRepository.findByAccountNo(toAccountNo)
-                .orElseThrow(() -> new RuntimeException("查無轉入帳號: " + toAccountNo));
+        if (from.getBalance().compareTo(amount) < 0) {
+            return String.format("轉帳失敗：餘額不足，目前餘額 %s，欲轉出 %s", from.getBalance(), amount);
+        }
+
+        val to = accountRepository.findByAccountNo(toAccountNo);
+        if (to == null) {
+            return String.format("查無轉入帳號: %s", toAccountNo);
+        }
 
         val now = LocalDateTime.now();
 
@@ -75,15 +82,27 @@ public class AccountService {
         transferRecordRepository.save(record);
 
         return String.format("轉帳成功！%s(%s) -> %s(%s)，金額: %s，轉出後餘額: %s",
-                fromAccountNo, from.getOwnerName(),
+                fromAccountNo, ownerName,
                 toAccountNo, to.getOwnerName(),
-                amount, from.getBalance());
+                amount, from.getBalance()
+        );
     }
 
-    public String getTransferHistory(String accountNo) {
+    public String getTransferHistory(String accountNo, String inputOwerName) {
+
+
+        val account = accountRepository.findByAccountNo(accountNo);
+        if (account == null) {
+            return String.format("查無此帳號: %s", accountNo);
+        }
+
+        val ownerName = account.getOwnerName();
+        if (!ownerName.equals(inputOwerName)) {
+            return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
+        }
+
         val records = transferRecordRepository
                 .findByFromAccountOrToAccountOrderByTransferTimeDesc(accountNo, accountNo);
-
         if (records.isEmpty()) {
             return "帳號 " + accountNo + " 目前無任何轉帳紀錄";
         }
