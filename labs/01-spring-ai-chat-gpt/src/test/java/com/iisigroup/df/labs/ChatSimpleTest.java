@@ -31,7 +31,7 @@ public class ChatSimpleTest {
         val userPrompt = "你好我叫小明 , 你能幫我介紹一下自己嗎?";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
-                .system("你是一個最佳好友 , 叫小厚 , 我是軟體工程師")
+                .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
                 .user(userPrompt)
                 .call()
                 .content();
@@ -43,7 +43,7 @@ public class ChatSimpleTest {
         val userPrompt = "你好我叫小明 , 你能幫我介紹一下自己嗎?";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
-                .system("你是一個最佳好友 , 叫小厚 , 我是軟體工程師")
+                .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
                 .user(userPrompt)
                 .stream()
                 .content();
