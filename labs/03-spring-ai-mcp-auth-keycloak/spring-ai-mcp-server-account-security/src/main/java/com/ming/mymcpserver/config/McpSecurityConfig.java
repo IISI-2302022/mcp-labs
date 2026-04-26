@@ -1,5 +1,7 @@
 package com.ming.mymcpserver.config;
 
+import com.ming.mymcpserver.converter.MyJwtAuthenticationConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,17 +17,27 @@ import java.util.List;
 
 import static org.springaicommunity.mcp.security.server.config.McpServerOAuth2Configurer.mcpServerOAuth2;
 
+@RequiredArgsConstructor
 @EnableMethodSecurity // Enable annotation-driven security
 @Configuration
 public class McpSecurityConfig {
+    private final MyJwtAuthenticationConverter myJwtAuthenticationConverter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http,
                                             @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUrl) throws Exception {
         return http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .with(mcpServerOAuth2(), (mcpAuthorization) -> {
-                    mcpAuthorization.authorizationServer(issuerUrl).resourcePath("/mcp");
-                })
+                .with(mcpServerOAuth2(), (mcpServerOAuth2Configurer) ->
+                        mcpServerOAuth2Configurer
+                                .oauth2ResourceServer((oAuth2ResourceServerConfigurer) ->
+                                        oAuth2ResourceServerConfigurer
+                                                .jwt((jwtConfigurer) -> jwtConfigurer
+                                                        .jwtAuthenticationConverter(myJwtAuthenticationConverter)
+                                                )
+                                )
+                                .authorizationServer(issuerUrl)
+                                .resourcePath("/mcp")
+                )
                 // MCP inspector
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(CsrfConfigurer::disable)

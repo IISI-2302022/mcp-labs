@@ -24,5 +24,6 @@ public class Account {
     private BigDecimal balance;
 
     @Version
+    @Column(name = "version", nullable = false)
     private Long version;
 }

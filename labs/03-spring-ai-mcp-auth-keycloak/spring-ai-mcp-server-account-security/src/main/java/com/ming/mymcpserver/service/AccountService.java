@@ -5,6 +5,7 @@ import com.ming.mymcpserver.repository.AccountRepository;
 import com.ming.mymcpserver.repository.TransferRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,8 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final TransferRecordRepository transferRecordRepository;
 
-    public String getBalance(String accountNo, String inputOwerName) {
+    public String getBalance(String accountNo) {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
 
         val account = accountRepository.findByAccountNo(accountNo);
         if (account == null) {
@@ -28,6 +30,7 @@ public class AccountService {
         }
 
         val ownerName = account.getOwnerName();
+        val inputOwerName = authentication.getName();
         if (!ownerName.equals(inputOwerName)) {
             return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
@@ -38,7 +41,8 @@ public class AccountService {
     }
 
 
-    public String transfer(String fromAccountNo, String toAccountNo, BigDecimal amount, String inputOwerName) {
+    public String transfer(String fromAccountNo, String toAccountNo, BigDecimal amount) {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (fromAccountNo.equals(toAccountNo)) {
             return "轉帳失敗：轉出與轉入帳號不可相同";
@@ -54,6 +58,7 @@ public class AccountService {
         }
 
         val ownerName = from.getOwnerName();
+        val inputOwerName = authentication.getName();
         if (!ownerName.equals(inputOwerName)) {
             return String.format("轉帳失敗：轉帳操作者 與 轉出帳戶擁有者 不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
@@ -88,8 +93,8 @@ public class AccountService {
         );
     }
 
-    public String getTransferHistory(String accountNo, String inputOwerName) {
-
+    public String getTransferHistory(String accountNo) {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
 
         val account = accountRepository.findByAccountNo(accountNo);
         if (account == null) {
@@ -97,6 +102,7 @@ public class AccountService {
         }
 
         val ownerName = account.getOwnerName();
+        val inputOwerName = authentication.getName();
         if (!ownerName.equals(inputOwerName)) {
             return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
