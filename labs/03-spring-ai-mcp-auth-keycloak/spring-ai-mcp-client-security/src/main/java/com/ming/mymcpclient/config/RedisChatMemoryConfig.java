@@ -34,13 +34,6 @@ public class RedisChatMemoryConfig {
     }
 
     @Bean
-    public ChatMemory chatMemory(ChatMemoryRepository chatMemoryRepository) {
-        return MessageWindowChatMemory.builder()
-                .chatMemoryRepository(chatMemoryRepository)
-                .build();
-    }
-
-    @Bean
     public MessageChatMemoryAdvisor redisMessageChatMemoryAdvisor(
             ChatMemory chatMemory
     ) {
