@@ -5,7 +5,8 @@ import com.ming.mymcpserver.repository.AccountRepository;
 import com.ming.mymcpserver.repository.TransferRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +22,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final TransferRecordRepository transferRecordRepository;
 
-    public String getBalance(String accountNo) {
-        val authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String getBalance(String accountNo, Authentication authentication) {
 
         val account = accountRepository.findByAccountNo(accountNo);
         if (account == null) {
@@ -31,7 +31,7 @@ public class AccountService {
 
         val ownerName = account.getOwnerName();
         val inputOwerName = authentication.getName();
-        if (!ownerName.equals(inputOwerName)) {
+        if (!isAdmin(authentication) && !ownerName.equals(inputOwerName)) {
             return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
 
@@ -41,8 +41,7 @@ public class AccountService {
     }
 
 
-    public String transfer(String fromAccountNo, String toAccountNo, BigDecimal amount) {
-        val authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String transfer(String fromAccountNo, String toAccountNo, BigDecimal amount, Authentication authentication) {
 
         if (fromAccountNo.equals(toAccountNo)) {
             return "轉帳失敗：轉出與轉入帳號不可相同";
@@ -75,6 +74,7 @@ public class AccountService {
         val now = LocalDateTime.now();
 
         from.setBalance(from.getBalance().subtract(amount));
+        // todo 先不考慮溢出問題 , 大家都是牛馬
         to.setBalance(to.getBalance().add(amount));
         accountRepository.save(from);
         accountRepository.save(to);
@@ -93,8 +93,7 @@ public class AccountService {
         );
     }
 
-    public String getTransferHistory(String accountNo) {
-        val authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String getTransferHistory(String accountNo, Authentication authentication) {
 
         val account = accountRepository.findByAccountNo(accountNo);
         if (account == null) {
@@ -103,7 +102,7 @@ public class AccountService {
 
         val ownerName = account.getOwnerName();
         val inputOwerName = authentication.getName();
-        if (!ownerName.equals(inputOwerName)) {
+        if (!isAdmin(authentication) && !ownerName.equals(inputOwerName)) {
             return String.format("查詢失敗：查詢操作者與帳戶擁有者不一致，操作者 %s，擁有者 %s", inputOwerName, ownerName);
         }
 
@@ -118,4 +117,12 @@ public class AccountService {
                         r.getTransferTime(), r.getFromAccount(), r.getToAccount(), r.getAmount()))
                 .collect(Collectors.joining("\n"));
     }
+
+
+    public static boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch("ROLE_mcp-server_admin"::equalsIgnoreCase);
+    }
+
 }
