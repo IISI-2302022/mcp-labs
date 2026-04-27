@@ -17,16 +17,4 @@ public class MemoryConfig {
                 .build();
     }
 
-    @Bean
-    public ChatMemory chatMemory(ChatMemoryRepository chatMemoryRepository) {
-        return MessageWindowChatMemory.builder()
-                .chatMemoryRepository(chatMemoryRepository)
-                .build();
-    }
-
-    @Bean
-    public ChatMemoryRepository chatMemoryRepository() {
-        return new InMemoryChatMemoryRepository();
-    }
-
 }

@@ -59,7 +59,7 @@ public class ChatSimpleTest {
         val content = client
                 .prompt(
                         new Prompt(
-                                new SystemMessage("你是一個最佳好友 , 叫小厚 , 我是軟體工程師")
+                                new SystemMessage("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
                                 , new UserMessage(userPrompt)
                         )
                 )
