@@ -1,0 +1,205 @@
+{
+  "info": {
+    "_postman_id": "67b940f6-02cd-4bf8-959f-c78a0e2ae958",
+    "name": "mcp-labs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3498730"
+  },
+  "item": [
+    {
+      "name": "02-spring-ai-tool-mcp",
+      "item": [
+        {
+          "name": "example",
+          "item": [
+            {
+              "name": "generate-uuid",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=generate-uuid-context1&userPrompt=查詢 kong workspace: 'ai' 之 route 及 plugin 資訊",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "generate-uuid-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "查詢 kong workspace: 'ai' 之 route 及 plugin 資訊"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-kong-workspace-api-plugin-info",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-workspace-api-plugin-info-context1&userPrompt=產生長度為 4 的 uuid",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "get-kong-workspace-api-plugin-info-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "產生長度為 4 的 uuid"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-kong-uuid-workspace-api-plugin-info",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-uuid-workspace-api-plugin-info-context1&userPrompt=產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 route 及 plugin 資訊",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "get-kong-uuid-workspace-api-plugin-info-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 route 及 plugin 資訊"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "account",
+          "item": [
+            {
+              "name": "get-account-balance",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-account-balance-context1&userPrompt=查詢帳戶 ACC001 , ACC002 , ACC003 之餘額",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "get-account-balance-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "查詢帳戶 ACC001 , ACC002 , ACC003 之餘額"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "transfer",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=transfer-context1&userPrompt=將帳戶 ACC001 之 500 元轉至 ACC002",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "transfer-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "將帳戶 ACC001 之 500 元轉至 ACC002"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-account-transfer-history",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-account-transfer-history-context1&userPrompt=查詢帳戶 ACC001 , ACC002 之轉帳歷史資訊",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8987",
+                  "path": [
+                    "chat",
+                    "sync"
+                  ],
+                  "query": [
+                    {
+                      "key": "contextId",
+                      "value": "get-account-transfer-history-context1"
+                    },
+                    {
+                      "key": "userPrompt",
+                      "value": "查詢帳戶 ACC001 , ACC002 之轉帳歷史資訊"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

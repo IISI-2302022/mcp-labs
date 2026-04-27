@@ -31,12 +31,12 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password: p@ssw0rd
-  #  h2:
-  #    console:
-  #      enabled: false
-  #      path: /h2-console
-  #      settings:
-  #        web-allow-others: true
+  h2:
+    console:
+      enabled: false
+      path: /h2-console
+      settings:
+        web-allow-others: true
   jpa:
     hibernate:
       ddl-auto: update
