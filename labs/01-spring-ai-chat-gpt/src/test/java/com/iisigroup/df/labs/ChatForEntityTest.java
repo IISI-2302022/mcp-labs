@@ -75,7 +75,8 @@ public class ChatForEntityTest {
                 .stream()
                 .content();
 
-        val content = contentFlux.collectList().block()
+        val content = contentFlux.collectList()
+                .block()
                 .stream()
                 .collect(Collectors.joining());
 
