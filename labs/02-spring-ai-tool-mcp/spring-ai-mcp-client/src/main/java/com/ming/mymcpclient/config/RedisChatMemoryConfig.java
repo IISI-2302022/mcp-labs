@@ -36,7 +36,6 @@ public class RedisChatMemoryConfig {
     @Bean
     public ChatMemory chatMemory(ChatMemoryRepository chatMemoryRepository) {
         return MessageWindowChatMemory.builder()
-                .maxMessages(10)
                 .chatMemoryRepository(chatMemoryRepository)
                 .build();
     }
