@@ -30,7 +30,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
         Assert.notNull(jedisPool, "jedisPool cannot be null");
         this.jedisPool = jedisPool;
         this.objectMapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
+        final SimpleModule module = new SimpleModule();
         module.addDeserializer(Message.class, new MessageDeserializer());
         this.objectMapper.registerModule(module);
     }
@@ -42,8 +42,10 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
     @Override
     public List<String> findConversationIds() {
         try (Jedis jedis = jedisPool.getResource()) {
-            List<String> keys = new ArrayList<>(jedis.keys(DEFAULT_KEY_PREFIX + "*"));
-            return keys.stream().map(key -> key.substring(DEFAULT_KEY_PREFIX.length())).toList();
+            final List<String> keys = new ArrayList<>(jedis.keys(DEFAULT_KEY_PREFIX + "*"));
+            return keys.stream()
+                    .map(key -> key.substring(DEFAULT_KEY_PREFIX.length()))
+                    .toList();
         }
     }
 
@@ -51,13 +53,13 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
     public List<Message> findByConversationId(String conversationId) {
         Assert.hasText(conversationId, "conversationId cannot be null or empty");
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = DEFAULT_KEY_PREFIX + conversationId;
-            List<String> messageStrings = jedis.lrange(key, 0, -1);
-            List<Message> messages = new ArrayList<>();
+            final String key = DEFAULT_KEY_PREFIX + conversationId;
+            final List<String> messageStrings = jedis.lrange(key, 0, -1);
+            final List<Message> messages = new ArrayList<>();
 
             for (String messageString : messageStrings) {
                 try {
-                    Message message = objectMapper.readValue(messageString, Message.class);
+                    final Message message = objectMapper.readValue(messageString, Message.class);
                     messages.add(message);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Error deserializing message", e);
@@ -74,14 +76,14 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
         Assert.noNullElements(messages, "messages cannot contain null elements");
 
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = DEFAULT_KEY_PREFIX + conversationId;
+            final String key = DEFAULT_KEY_PREFIX + conversationId;
             // Clear existing messages first
             deleteByConversationId(conversationId);
 
             // Add all messages in order
             for (Message message : messages) {
                 try {
-                    String messageJson = objectMapper.writeValueAsString(message);
+                    final String messageJson = objectMapper.writeValueAsString(message);
                     jedis.rpush(key, messageJson);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Error serializing message", e);
@@ -94,21 +96,22 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
     public void deleteByConversationId(String conversationId) {
         Assert.hasText(conversationId, "conversationId cannot be null or empty");
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = DEFAULT_KEY_PREFIX + conversationId;
+            final String key = DEFAULT_KEY_PREFIX + conversationId;
             jedis.del(key);
         }
     }
 
     /**
      * Clear messages over the limit for a conversation
+     *
      * @param conversationId the conversation ID
-     * @param maxLimit maximum number of messages to keep
-     * @param deleteSize number of messages to delete when over limit
+     * @param maxLimit       maximum number of messages to keep
+     * @param deleteSize     number of messages to delete when over limit
      */
     public void clearOverLimit(String conversationId, int maxLimit, int deleteSize) {
         Assert.hasText(conversationId, "conversationId cannot be null or empty");
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = DEFAULT_KEY_PREFIX + conversationId;
+            final String key = DEFAULT_KEY_PREFIX + conversationId;
             List<String> all = jedis.lrange(key, 0, -1);
 
             if (all.size() >= maxLimit) {
@@ -170,7 +173,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository, AutoClos
             if (poolConfig == null) {
                 poolConfig = new JedisPoolConfig();
             }
-            JedisPool jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
+            final JedisPool jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
             return new RedisChatMemoryRepository(jedisPool);
         }
 
