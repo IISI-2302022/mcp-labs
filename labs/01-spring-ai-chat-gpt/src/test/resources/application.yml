@@ -7,6 +7,11 @@ spring:
   application:
     name: spring-ai-chat-gpt
   ai:
+    chat:
+      client:
+        observations:
+          log-completion: true
+          log-prompt: true
     openai:
       api-key: ${spring_ai_openai_api_key:nothing}
       base-url: ${spring_ai_openai_base_url:https://api.openai.com}

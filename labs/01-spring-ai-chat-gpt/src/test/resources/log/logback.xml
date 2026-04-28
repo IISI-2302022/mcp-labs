@@ -12,7 +12,7 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
-
+    <logger name="org.springframework.ai.chat.client.observation" level="DEBUG"/>
     <logger name="org.springframework.ai.chat.client.advisor" level="DEBUG"/>
 
 </configuration>

@@ -1,6 +1,7 @@
 package com.iisigroup.df.labs;
 
 import com.iisigroup.df.labs.base.MySpringBootTest;
+import com.iisigroup.df.labs.config.LoggingConfig;
 import com.iisigroup.df.labs.tool.DateTimeTool;
 import com.iisigroup.df.labs.tool.UUIDTool;
 import jakarta.annotation.PostConstruct;
@@ -8,13 +9,18 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 
 import java.util.Map;
 
+@Import(LoggingConfig.class)
 @Slf4j
 @MySpringBootTest
 public class ChatFunctionCallTest {
+    @Autowired
+    private SimpleLoggerAdvisor simpleLoggerAdvisor;
 
     @Autowired
     private ChatClient.Builder builder;
@@ -24,6 +30,7 @@ public class ChatFunctionCallTest {
     @PostConstruct
     public void init() {
         this.client = builder
+                .defaultAdvisors(simpleLoggerAdvisor)
                 .build();
     }
 

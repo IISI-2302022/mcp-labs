@@ -10,13 +10,13 @@ spring:
           auth-code:
             provider: authserver
             authorization-grant-type: authorization_code
-            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
             client-id: mcp-client
+            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
           client-credentials:
             provider: authserver
             authorization-grant-type: client_credentials
-            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
             client-id: mcp-client
+            client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
         provider:
           authserver:
             issuer-uri: http://localhost:8080/realms/mcp
@@ -33,7 +33,7 @@ spring:
         enabled: true
         toolcallback:
           enabled: true
-        initialized: false
+        initialized: true
         type: sync
         streamable-http:
           connections:

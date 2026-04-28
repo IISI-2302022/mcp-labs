@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -18,7 +19,7 @@ import java.util.List;
 import static org.springaicommunity.mcp.security.server.config.McpServerOAuth2Configurer.mcpServerOAuth2;
 
 @RequiredArgsConstructor
-@EnableMethodSecurity // Enable annotation-driven security
+@EnableMethodSecurity
 @Configuration
 public class McpSecurityConfig {
     private final MyJwtAuthenticationConverter myJwtAuthenticationConverter;
@@ -37,6 +38,9 @@ public class McpSecurityConfig {
                                 )
                                 .authorizationServer(issuerUrl)
                                 .resourcePath("/mcp")
+                )
+                .headers((configurer) ->
+                        configurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 )
                 // MCP inspector
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
