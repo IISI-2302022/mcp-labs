@@ -21,7 +21,7 @@ spring:
           authserver:
             issuer-uri: http://localhost:8080/realms/mcp
   application:
-    name: spring-ai-mcp-client
+    name: spring-ai-mcp-client-security
   ai:
     memory:
       redis:
