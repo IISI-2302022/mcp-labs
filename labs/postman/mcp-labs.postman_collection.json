@@ -281,6 +281,74 @@
               }
             }
           ]
+        },
+        {
+          "name": "client_credentials",
+          "item": [],
+          "auth": {
+            "type": "oauth2",
+            "oauth2": [
+              {
+                "key": "refreshTokenUrl",
+                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "type": "string"
+              },
+              {
+                "key": "clientSecret",
+                "value": "OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX",
+                "type": "string"
+              },
+              {
+                "key": "clientId",
+                "value": "mcp-client",
+                "type": "string"
+              },
+              {
+                "key": "accessTokenUrl",
+                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "type": "string"
+              },
+              {
+                "key": "grant_type",
+                "value": "client_credentials",
+                "type": "string"
+              },
+              {
+                "key": "tokenName",
+                "value": "Client_Credentials_Token",
+                "type": "string"
+              },
+              {
+                "key": "addTokenTo",
+                "value": "header",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
         }
       ],
       "event": [
