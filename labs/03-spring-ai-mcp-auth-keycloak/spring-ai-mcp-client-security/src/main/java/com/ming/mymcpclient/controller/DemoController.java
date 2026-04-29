@@ -5,8 +5,8 @@ import io.modelcontextprotocol.spec.McpSchema;
 import lombok.val;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +25,16 @@ class DemoController {
 
     private final ChatClient chatClient;
 
-    DemoController(ChatClient.Builder chatClientBuilder, ToolCallbackProvider toolCallbackProvider, List<McpSyncClient> clients, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
+    DemoController(
+            ChatClient.Builder chatClientBuilder
+            , SimpleLoggerAdvisor simpleLoggerAdvisor
+            , ToolCallbackProvider toolCallbackProvider
+            , List<McpSyncClient> clients
+            , MessageChatMemoryAdvisor messageChatMemoryAdvisor
+    ) {
         this.clients = clients;
         this.chatClient = chatClientBuilder
-                .defaultAdvisors(messageChatMemoryAdvisor)
+                .defaultAdvisors(messageChatMemoryAdvisor, simpleLoggerAdvisor)
                 .defaultToolCallbacks(toolCallbackProvider)
                 .build();
     }

@@ -3,6 +3,7 @@ package com.ming.mymcpclient.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.http.MediaType;
@@ -21,12 +22,13 @@ public class ChatController {
 
 
     public ChatController(
+            SimpleLoggerAdvisor simpleLoggerAdvisor,
             MessageChatMemoryAdvisor messageChatMemoryAdvisor,
             ChatClient.Builder chatClientBuilder,
             ToolCallbackProvider toolCallbackProvider
     ) {
         this.chatClient = chatClientBuilder
-                .defaultAdvisors(messageChatMemoryAdvisor)
+                .defaultAdvisors(messageChatMemoryAdvisor, simpleLoggerAdvisor)
                 .defaultToolCallbacks(toolCallbackProvider)
                 .build();
     }
