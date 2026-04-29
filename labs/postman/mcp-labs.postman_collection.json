@@ -18,7 +18,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8987/chat/sync?contextId=generate-uuid-context1&userPrompt=查詢 kong workspace: 'ai' 之 route 及 plugin 資訊",
+                  "raw": "http://localhost:8987/chat/sync?contextId=generate-uuid-context3&userPrompt=產生長度為 4 的 uuid",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -31,11 +31,11 @@
                   "query": [
                     {
                       "key": "contextId",
-                      "value": "generate-uuid-context1"
+                      "value": "generate-uuid-context3"
                     },
                     {
                       "key": "userPrompt",
-                      "value": "查詢 kong workspace: 'ai' 之 route 及 plugin 資訊"
+                      "value": "產生長度為 4 的 uuid"
                     }
                   ]
                 }
@@ -48,7 +48,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-workspace-api-plugin-info-context1&userPrompt=產生長度為 4 的 uuid",
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-workspace-api-plugin-info-context1&userPrompt=請查詢 kong workspace 為 'ai' 之所有 routes 及其 plugin 資訊",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -65,7 +65,7 @@
                     },
                     {
                       "key": "userPrompt",
-                      "value": "產生長度為 4 的 uuid"
+                      "value": "請查詢 kong workspace 為 'ai' 之所有 routes 及其 plugin 資訊"
                     }
                   ]
                 }
@@ -78,7 +78,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-uuid-workspace-api-plugin-info-context1&userPrompt=產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 route 及 plugin 資訊",
+                  "raw": "http://localhost:8987/chat/sync?contextId=get-kong-uuid-workspace-api-plugin-info-context1&userPrompt=產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 routes 及其 plugins 資訊",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -95,7 +95,7 @@
                     },
                     {
                       "key": "userPrompt",
-                      "value": "產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 route 及 plugin 資訊"
+                      "value": "產生長度為 4 的 uuid , 並將該值當作 kong workspace 查詢 routes 及其 plugins 資訊"
                     }
                   ]
                 }
@@ -198,6 +198,113 @@
               "response": []
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "oauth2",
+      "item": [
+        {
+          "name": "auth_code",
+          "item": [],
+          "auth": {
+            "type": "oauth2",
+            "oauth2": [
+              {
+                "key": "refreshTokenUrl",
+                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "type": "string"
+              },
+              {
+                "key": "scope",
+                "value": "",
+                "type": "string"
+              },
+              {
+                "key": "state",
+                "value": "random_number",
+                "type": "string"
+              },
+              {
+                "key": "clientSecret",
+                "value": "OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX",
+                "type": "string"
+              },
+              {
+                "key": "clientId",
+                "value": "mcp-client",
+                "type": "string"
+              },
+              {
+                "key": "accessTokenUrl",
+                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "type": "string"
+              },
+              {
+                "key": "authUrl",
+                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/auth",
+                "type": "string"
+              },
+              {
+                "key": "tokenName",
+                "value": "AuthCodeToken",
+                "type": "string"
+              },
+              {
+                "key": "addTokenTo",
+                "value": "header",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
         }
       ]
     }
