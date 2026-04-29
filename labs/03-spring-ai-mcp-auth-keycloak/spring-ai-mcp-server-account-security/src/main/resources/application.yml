@@ -10,7 +10,7 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/mcp
   application:
-    name: spring-ai-mcp-server-account
+    name: spring-ai-mcp-server-account-security
   ai:
     mcp:
       server:
