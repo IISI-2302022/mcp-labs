@@ -1,7 +1,7 @@
 {
   "servers": {
     //    拿來測試 02 labs
-    "spring-ai-mcp-server-account-security": {
+    "spring-ai-mcp-server-account": {
       "type": "http",
       "url": "http://localhost:8989/mcp",
       // intellij bug , 沒辦法傳 request header
@@ -10,7 +10,7 @@
       }
     },
     // 拿來測試 03 labs
-    "spring-ai-mcp-server-account-security-1": {
+    "spring-ai-mcp-server-account-security": {
       "command": "npx",
       "args": [
         "-y",
