@@ -81,11 +81,6 @@ public class AccountService {
 
     public String getTransferHistory(String accountNo) {
 
-        val account = accountRepository.findByAccountNo(accountNo);
-        if (account == null) {
-            return String.format("查無此帳號: %s", accountNo);
-        }
-
         val records = transferRecordRepository
                 .findByFromAccountOrToAccountOrderByTransferTimeDesc(accountNo, accountNo);
         if (records.isEmpty()) {
