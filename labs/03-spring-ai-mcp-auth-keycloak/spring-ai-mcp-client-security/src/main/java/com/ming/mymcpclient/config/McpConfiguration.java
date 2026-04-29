@@ -23,12 +23,22 @@ class McpConfiguration {
     }
 
     @Bean
-    WebClientCustomizer webClientCustomizer(OAuth2AuthorizedClientManager clientManager, ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientService oAuth2AuthorizedClientService) {
+    WebClientCustomizer webClientCustomizer(
+            OAuth2AuthorizedClientManager clientManager
+            , ClientRegistrationRepository clientRegistrationRepository
+            , OAuth2AuthorizedClientService oAuth2AuthorizedClientService
+    ) {
         return webClientBuilder -> webClientBuilder
-                .filter(new McpOAuth2HybridExchangeFilterFunction(clientManager, serviceAuthorizedClientManager(clientRegistrationRepository, oAuth2AuthorizedClientService), "auth-code", "client-credentials"));
+                .filter(new McpOAuth2HybridExchangeFilterFunction(
+                                clientManager
+                                , getServiceAuthorizedClientManager(clientRegistrationRepository, oAuth2AuthorizedClientService)
+                                , "auth-code"
+                                , "client-credentials"
+                        )
+                );
     }
 
-    private AuthorizedClientServiceOAuth2AuthorizedClientManager serviceAuthorizedClientManager(
+    private AuthorizedClientServiceOAuth2AuthorizedClientManager getServiceAuthorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientService authorizedClientService
     ) {
