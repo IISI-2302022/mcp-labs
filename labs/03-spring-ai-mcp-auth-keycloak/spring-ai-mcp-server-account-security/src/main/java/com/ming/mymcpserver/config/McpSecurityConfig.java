@@ -2,6 +2,9 @@ package com.ming.mymcpserver.config;
 
 import com.ming.mymcpserver.converter.MyJwtAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springaicommunity.mcp.security.server.oauth2.authentication.BearerResourceMetadataTokenAuthenticationEntryPoint;
+import org.springaicommunity.mcp.security.server.oauth2.metadata.ResourceIdentifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,8 +29,11 @@ public class McpSecurityConfig {
     private final MyJwtAuthenticationConverter myJwtAuthenticationConverter;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                            @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUrl) throws Exception {
+    SecurityFilterChain securityFilterChain(
+            HttpSecurity http
+            , @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUrl
+            , BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint)
+            throws Exception {
         return http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .with(mcpServerOAuth2(), (mcpServerOAuth2Configurer) ->
                         mcpServerOAuth2Configurer
@@ -35,6 +42,7 @@ public class McpSecurityConfig {
                                                 .jwt((jwtConfigurer) -> jwtConfigurer
                                                         .jwtAuthenticationConverter(myJwtAuthenticationConverter)
                                                 )
+                                                .authenticationEntryPoint(bearerResourceMetadataTokenAuthenticationEntryPoint)
                                 )
                                 .authorizationServer(issuerUrl)
                                 .resourcePath("/mcp")
@@ -59,6 +67,18 @@ public class McpSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint() throws NoSuchFieldException, IllegalAccessException {
+        val bearerTokenAuthenticationEntryPoint = new BearerTokenAuthenticationEntryPoint();
+        bearerTokenAuthenticationEntryPoint.setRealmName("mcp");
+        val bearerResourceMetadataTokenAuthenticationEntryPoint = new BearerResourceMetadataTokenAuthenticationEntryPoint(new ResourceIdentifier("/mcp"));
+        val aClass = bearerResourceMetadataTokenAuthenticationEntryPoint.getClass();
+        val declaredField = aClass.getDeclaredField("delegate");
+        declaredField.setAccessible(true);
+        declaredField.set(bearerResourceMetadataTokenAuthenticationEntryPoint, bearerTokenAuthenticationEntryPoint);
+        return bearerResourceMetadataTokenAuthenticationEntryPoint;
     }
 }
 

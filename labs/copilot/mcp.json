@@ -1,13 +1,9 @@
 {
   "servers": {
     //    拿來測試 02 labs
-    "spring-ai-mcp-server-account": {
+    "spring-ai-mcp-server-account01": {
       "type": "http",
-      "url": "http://localhost:8989/mcp",
-      // intellij bug , 沒辦法傳 request header
-      "headers": {
-        "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrMm9USl82N1ZwR21yXzVvX2NSb0dibWdsWVhlZFBmYVBINUs2WGg4eDg0In0.eyJleHAiOjE3Nzc0Mjk4NDcsImlhdCI6MTc3NzQyOTU0NywiYXV0aF90aW1lIjoxNzc3NDI4NTQ4LCJqdGkiOiJvbnJ0YWM6ODE1MmRiNzAtMjhiMC00NDUxLWJiMzMtNzhkODdiNzg0ZmZhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tY3AiLCJhdWQiOlsibWNwLXNlcnZlciIsImFjY291bnQiXSwic3ViIjoiNTQ5YzI0ZGItYWZlMi00NDBiLThjYWEtNTVkNTY5MDdiNmQ0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWNwLWNsaWVudCIsInNpZCI6ImFkODI2ZmExLWEzZmYtNDA4My04NGIyLWJlZDcyNGEwMDk2ZSIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4OTg3Il0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1jcCIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtY3Atc2VydmVyIjp7InJvbGVzIjpbImFkbWluIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJjaGlOYW1lIjoi546L5bCP5piOIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJtYyBjaGVuIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWluZyIsImdpdmVuX25hbWUiOiJtYyIsImZhbWlseV9uYW1lIjoiY2hlbiIsImVtYWlsIjoiMjMwMjAyMkBpaXNpZ3JvdXAuY29tIn0.YBGQbTYu8Qoc7KuoQZ_s4c0OGhRhb36Asm4uVIoDsWIKoO1XT7_o51joF4jxfdAPNJ5fu2qQ_2UC8o26DN6NcDgJ-KfAr4tprVdo30maHcMn2ZZlU_Euo1IWE_1GpCUB85GF4vQeJL_3ADU6KrVPMksezkpUzrsBj1comr4ydoe4xiv_2PXdx0F9lFGCiDho0X69Ce3dlib8Lf7F46IWdOy5HEmhyKQ4sZI2el8Hq1efCSnl_a5cL23vLmIK09Jxc6mDGGYXVFebfEVAMfrmpfsvhml63iwx9unYDoAUmV2_ifITPc8TxuFuBzFCMnrbF1FnzoJz_sLJxRbUv5T1HA"
-      }
+      "url": "http://localhost:8989/mcp"
     },
     // 拿來測試 03 labs
     "spring-ai-mcp-server-account-security": {
@@ -22,6 +18,16 @@
       "env": {
         "AUTH_TOKEN": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrMm9USl82N1ZwR21yXzVvX2NSb0dibWdsWVhlZFBmYVBINUs2WGg4eDg0In0.eyJleHAiOjE3Nzc0MzE4ODUsImlhdCI6MTc3NzQzMTU4NSwiYXV0aF90aW1lIjoxNzc3NDMxNDg2LCJqdGkiOiJvbnJ0YWM6OGQ4YmZkMTgtNzYxYi00MjQ3LTgyNmUtNGMxNmQ5ZmQ2MzU2IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tY3AiLCJhdWQiOlsibWNwLXNlcnZlciIsImFjY291bnQiXSwic3ViIjoiNTQ5YzI0ZGItYWZlMi00NDBiLThjYWEtNTVkNTY5MDdiNmQ0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWNwLWNsaWVudCIsInNpZCI6IjJlZmEyYTc4LTI4MjYtNGY2NS04N2ZiLWYwN2JiOWRhMzAwOSIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4OTg3Il0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1jcCIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtY3Atc2VydmVyIjp7InJvbGVzIjpbImFkbWluIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJjaGlOYW1lIjoi546L5bCP5piOIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJtYyBjaGVuIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWluZyIsImdpdmVuX25hbWUiOiJtYyIsImZhbWlseV9uYW1lIjoiY2hlbiIsImVtYWlsIjoiMjMwMjAyMkBpaXNpZ3JvdXAuY29tIn0.bIpo_yYf8VrVi7lebtUzWb-oTjuj8nsicehXf8o0S33jaK6YMEnYRKmPZdKTzDQawvo4rnr-IDfooi0T_hPScbSNu_sVxuC6hi3_KFQLumpQzcQkNhkLPYANDKhUhYI5rvlDttUrzufHQHPRKIzR9xbBtwzX5b9k68n9_nRgHFm4T4H-HLeY6yi_4RQ9-bU6rzh7d8rN3uy4Qz9QTwPYzLZbLnIUi4WwatAjhGsAUU9fuMREZKQcPNL5p4zKcP4X-LQOc4hEzwAhbcRtvK2Cyh7tSu8lIOEBQXBitxCiBZpFvAIWEBfYgxXYdjqeJeqJTx3lLa_xMiis1f6q6Q8Tng"
       }
+    },
+    "spring-ai-mcp-server-account-security-2": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:8989/mcp",
+        "--static-oauth-client-info",
+        "{ \"client_id\": \"mcp-client\", \"client_secret\": \"OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX\" }"
+      ]
     }
   }
 }

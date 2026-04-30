@@ -38,15 +38,15 @@ mkdir -p "${THIS_SHELL_DIR}/redis/data/"
   --name keycloak \
   --network mcp-labs \
   --restart always \
-  -e KEYCLOAK_ADMIN=admin \
-  -e KEYCLOAK_ADMIN_PASSWORD=admin \
+  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
+  -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
   -e KC_DB_USERNAME=admin \
   -e KC_DB_PASSWORD=admin \
   -e KC_DB=postgres \
   -e KC_DB_URL=jdbc:postgresql://postgresql:5432/keycloak \
   -v "${THIS_SHELL_DIR}/keycloak/data/:/opt/keycloak/data/import/" \
   -p 8080:8080 \
-  keycloak/keycloak:26.2 \
+  keycloak/keycloak:26.6.1 \
   start-dev --import-realm
 
 # postgres
