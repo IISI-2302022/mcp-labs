@@ -28,13 +28,13 @@ public class ChatAdvisorTest {
     @Autowired
     private ChatClient.Builder builder;
 
+    private ChatClient client;
+
     @Autowired
     private SimpleLoggerAdvisor simpleLoggerAdvisor;
 
     @Autowired
     private MessageChatMemoryAdvisor messageChatMemoryAdvisor;
-
-    private ChatClient client;
 
     @PostConstruct
     public void init() {
