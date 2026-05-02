@@ -19,7 +19,7 @@ public class AccountTool {
 
     private final AccountService accountService;
 
-    @PreAuthorize("isAuthenticated()")
+    //    @PreAuthorize("isAuthenticated()")
     @McpTool(description = "查詢帳戶餘額，輸入帳號回傳戶名與目前餘額")
     public String getBalance(@ToolParam(description = "帳號，例如 ACC001") String accountNo) {
         log.info("查詢餘額: accountNo={}", accountNo);
@@ -27,7 +27,7 @@ public class AccountTool {
         return accountService.getBalance(accountNo, authentication);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    //    @PreAuthorize("isAuthenticated()")
     @McpTool(description = "執行轉帳，從來源帳號轉指定金額到目標帳號，回傳轉帳結果")
     public String transfer(
             @ToolParam(description = "轉出帳號") String fromAccountNo,
@@ -38,7 +38,7 @@ public class AccountTool {
         return accountService.transfer(fromAccountNo, toAccountNo, amount, authentication);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    //    @PreAuthorize("isAuthenticated()")
     @McpTool(description = "查詢轉帳紀錄，輸入帳號查詢該帳號所有轉入與轉出紀錄")
     public String getTransferHistory(@ToolParam(description = "要查詢的帳號") String accountNo) {
         log.info("查詢轉帳紀錄: accountNo={}", accountNo);
