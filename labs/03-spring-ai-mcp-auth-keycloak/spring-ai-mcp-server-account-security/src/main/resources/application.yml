@@ -27,7 +27,7 @@ spring:
           mcp-endpoint: /mcp
         tool-change-notification: true
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test-security
     driver-class-name: org.h2.Driver
     username: sa
     password:
