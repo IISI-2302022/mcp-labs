@@ -8,17 +8,17 @@ spring:
       client:
         registration:
           auth-code:
-            provider: authserver
+            provider: auth-server
             authorization-grant-type: authorization_code
             client-id: mcp-client
             client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
           client-credentials:
-            provider: authserver
+            provider: auth-server
             authorization-grant-type: client_credentials
             client-id: mcp-client
             client-secret: OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX
         provider:
-          authserver:
+          auth-server:
             issuer-uri: http://localhost:8080/realms/mcp
   application:
     name: spring-ai-mcp-client-security
