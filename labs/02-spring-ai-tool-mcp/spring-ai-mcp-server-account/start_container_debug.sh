@@ -23,7 +23,6 @@ export MY_JAVA_APP_PORT=8989
 export MY_JAVA_DEBUG_PORT=56216
 
 "${container_engine}" build \
-  --build-arg PORT_EXPOSED="${MY_JAVA_APP_PORT} ${MY_JAVA_DEBUG_PORT}" \
   -t "${app_name}:latest" \
   -f "${THIS_SHELL_DIR}/Dockerfile" || exit 1
 
