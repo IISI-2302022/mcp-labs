@@ -39,4 +39,5 @@ export MY_JAVA_DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n
   -p "${MY_JAVA_APP_PORT}:${MY_JAVA_APP_PORT}" \
   -p "${MY_JAVA_DEBUG_PORT}:${MY_JAVA_DEBUG_PORT}" \
   -e "JAVA_TOOL_OPTIONS=${MY_JAVA_DEBUG_OPTS}" \
+  -e TZ="Asia/Taipei" \
   "${app_name}:latest"
