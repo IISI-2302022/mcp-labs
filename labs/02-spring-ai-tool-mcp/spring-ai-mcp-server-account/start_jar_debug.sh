@@ -4,12 +4,9 @@
 export THIS_SHELL_PATH="$(readlink -f "$0")"
 export THIS_SHELL_DIR="$(dirname "${THIS_SHELL_PATH}")"
 
-#export BUILD_JAR_SHELL="${THIS_SHELL_DIR}/../build.sh"
-#chmod u+x "${BUILD_JAR_SHELL}"
-#"${BUILD_JAR_SHELL}" || exit 1
-
-#export JAVA_HOME="自己填"
-#export PATH="${JAVA_HOME}/bin:${PATH}"
+export BUILD_JAR_SHELL="${THIS_SHELL_DIR}/../build.sh"
+chmod u+x "${BUILD_JAR_SHELL}"
+"${BUILD_JAR_SHELL}" || exit 1
 
 export MY_JAVA_DEBUG_PORT=56216
 export MY_JAVA_DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:${MY_JAVA_DEBUG_PORT}"
