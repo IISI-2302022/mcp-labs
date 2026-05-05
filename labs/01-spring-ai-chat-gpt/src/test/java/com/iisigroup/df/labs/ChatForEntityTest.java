@@ -59,7 +59,7 @@ public class ChatForEntityTest {
         });
 
         val userPrompt = """
-                  隨機生成台灣一位演員的作品集
+                  隨機生成台灣三位演員的作品集
                   {format}
                 """;
 
