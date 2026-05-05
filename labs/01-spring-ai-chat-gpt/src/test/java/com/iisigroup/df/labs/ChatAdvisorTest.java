@@ -83,7 +83,7 @@ public class ChatAdvisorTest {
         log.info("response content1: {}", content);
 
 
-        val userPrompt2 = "你知道我叫做啥嗎 ?";
+        val userPrompt2 = "你知道我的名子嗎?";
         log.info("request userPrompt2: {}", userPrompt2);
 
         val content1 = client.prompt()
