@@ -10,6 +10,7 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
@@ -43,6 +44,11 @@ public class ChatFunctionCallTest {
 
         val content = client
                 .prompt(userPrompt)
+//                .toolCallbacks(
+//                        MethodToolCallbackProvider.builder()
+//                                .toolObjects(new DateTimeTool())
+//                                .build()
+//                )
                 .tools(new DateTimeTool())
                 .call()
                 .content();
@@ -58,6 +64,11 @@ public class ChatFunctionCallTest {
 
         val content = client
                 .prompt(userPrompt)
+//                .toolCallbacks(
+//                        MethodToolCallbackProvider.builder()
+//                                .toolObjects(new DateTimeTool())
+//                                .build()
+//                )
                 .tools(new DateTimeTool())
                 .call()
                 .content();
@@ -73,6 +84,11 @@ public class ChatFunctionCallTest {
 
         val content = client
                 .prompt(userPrompt)
+//                .toolCallbacks(
+//                        MethodToolCallbackProvider.builder()
+//                                .toolObjects(new UUIDTool())
+//                                .build()
+//                )
                 .tools(new UUIDTool())
                 .toolContext(
                         // 可以給 tool method 吃
