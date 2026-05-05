@@ -28,7 +28,7 @@ public class ChatSimpleTest {
 
     @Test
     public void syncChatFluent() {
-        val userPrompt = "你好我叫小明 , 你能幫我介紹一下自己嗎?";
+        val userPrompt = "你好我叫小明 , 你能自我介紹一下嗎?";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
                 .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
@@ -39,8 +39,19 @@ public class ChatSimpleTest {
     }
 
     @Test
+    public void syncChatFluent1() {
+        val userPrompt = "你好我叫小明 , 你能自我介紹一下嗎?";
+        log.info("request userPrompt: {}", userPrompt);
+        val content = client.prompt(userPrompt)
+                .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
+                .call()
+                .content();
+        log.info("response content: {}", content);
+    }
+
+    @Test
     public void asyncChatFluent() throws InterruptedException {
-        val userPrompt = "你好我叫小明 , 你能幫我介紹一下自己嗎?";
+        val userPrompt = "你好我叫小明 , 你能自我介紹一下嗎?";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
                 .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
@@ -51,6 +62,20 @@ public class ChatSimpleTest {
 
         Thread.sleep(10000);
     }
+
+    @Test
+    public void asyncChatFluent1() throws InterruptedException {
+        val userPrompt = "你好我叫小明 , 你能自我介紹一下嗎?";
+        log.info("request userPrompt: {}", userPrompt);
+        val content = client.prompt(userPrompt)
+                .system("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
+                .stream()
+                .content();
+        content.subscribe((contentSplit) -> log.info("response content: {}", contentSplit));
+
+        Thread.sleep(10000);
+    }
+
 
     @Test
     public void syncChatNonFluent() {
@@ -70,11 +95,15 @@ public class ChatSimpleTest {
 
     @Test
     public void syncChatWithMetadata() {
-        val userPrompt = "你好";
+        val userPrompt = "你好我叫小明 , 你能幫我介紹一下自己嗎?";
         log.info("request userPrompt: {}", userPrompt);
         val content = client.prompt()
-                .user(u ->
-                        u.text(userPrompt)
+                .system(systemSpec ->
+                        systemSpec.text("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
+                                .metadata("key2", "value2")
+                )
+                .user(userSpec ->
+                        userSpec.text(userPrompt)
                                 // 可以給 advisor 存取
                                 .metadata("key1", "value1")
                 )
