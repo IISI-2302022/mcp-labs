@@ -20,7 +20,7 @@ fi
 export app_name=spring-ai-mcp-server-account
 
 export MY_JAVA_APP_PORT=8989
-export MY_JAVA_DEBUG_PORT=56216
+export MY_JAVA_DEBUG_PORT=5005
 
 "${container_engine}" build \
   --build-arg JAR_PATH="./target/${app_name}.jar" \
