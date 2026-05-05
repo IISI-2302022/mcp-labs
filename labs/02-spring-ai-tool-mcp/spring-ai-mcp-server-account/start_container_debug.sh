@@ -23,6 +23,7 @@ export MY_JAVA_APP_PORT=8989
 export MY_JAVA_DEBUG_PORT=56216
 
 "${container_engine}" build \
+  --build-arg JAR_PATH="./target/${app_name}.jar" \
   -t "${app_name}:latest" \
   -f "${THIS_SHELL_DIR}/Dockerfile" || exit 1
 
@@ -34,10 +35,11 @@ export MY_JAVA_DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n
 
 "${container_engine}" run \
   -d \
-  --rm \
   --name "${app_name}" \
   -p "${MY_JAVA_APP_PORT}:${MY_JAVA_APP_PORT}" \
   -p "${MY_JAVA_DEBUG_PORT}:${MY_JAVA_DEBUG_PORT}" \
-  -e "JAVA_TOOL_OPTIONS=${MY_JAVA_DEBUG_OPTS}" \
+  -e "MY_JAVA_DEBUG_OPTS=${MY_JAVA_DEBUG_OPTS}" \
   -e TZ="Asia/Taipei" \
+  -e APP_NAME="${app_name}.jar" \
+  -e proj_profile=prod \
   "${app_name}:latest"
