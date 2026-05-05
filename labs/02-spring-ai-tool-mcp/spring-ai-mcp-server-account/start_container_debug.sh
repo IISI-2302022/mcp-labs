@@ -35,6 +35,7 @@ export MY_JAVA_DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n
 
 "${container_engine}" run \
   -d \
+  --rm \
   --name "${app_name}" \
   -p "${MY_JAVA_APP_PORT}:${MY_JAVA_APP_PORT}" \
   -p "${MY_JAVA_DEBUG_PORT}:${MY_JAVA_DEBUG_PORT}" \
