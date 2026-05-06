@@ -22,7 +22,7 @@ public class KongTool {
 
     private final KongAdminClient kongAdminClient;
 
-    @McpTool(name = "listKongRoutesWithPlugin", description = "列出 kong routes 與其對應之 plugins 資訊")
+    @McpTool(description = "列出 kong routes 與其對應之 plugins 資訊")
     public Mono<Map<String, List<String>>> listKongRoutesWithPlugin(@McpToolParam(required = false, description = "kong workspace") String workspace) {
         val pluginsApiResult = kongAdminClient.listPlugins(workspace);
         val routesApiResult = kongAdminClient.listRoutes(workspace);
