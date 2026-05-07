@@ -100,6 +100,7 @@ public class ChatSimpleTest {
         val content = client.prompt()
                 .system(systemSpec ->
                         systemSpec.text("你是我的好朋友 , 叫小厚 , 是一名軟體工程師")
+                                // 可以給 advisor 存取
                                 .metadata("key2", "value2")
                 )
                 .user(userSpec ->
