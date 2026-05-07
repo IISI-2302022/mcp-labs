@@ -43,7 +43,7 @@ public class ChatPromptTemplateTest {
 
     @Test
     public void syncChatWithPromptTemplateAndCustomReplacement() {
-        val userPrompt = "請告訴我 5 部由 <composer> 創作配樂的電影名稱。";
+        val userPrompt = "請{you}告訴我 5 部由 <composer> 創作配樂的電影名稱。";
 
         log.info("request userPrompt: {}", userPrompt);
 
