@@ -1,12 +1,13 @@
 package com.iisigroup.df.labs;
 
+import com.iisigroup.df.labs.advisor.PromptGuardAdvisor;
 import com.iisigroup.df.labs.base.MySpringBootTest;
-import com.iisigroup.df.labs.config.LoggingConfig;
-import com.iisigroup.df.labs.config.MemoryConfig;
+import com.iisigroup.df.labs.config.AdvisorConfig;
 import com.iisigroup.df.labs.model.ActorFilms;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -20,7 +21,7 @@ import org.springframework.core.ParameterizedTypeReference;
 
 import java.util.List;
 
-@Import({LoggingConfig.class, MemoryConfig.class})
+@Import(AdvisorConfig.class)
 @Slf4j
 @MySpringBootTest
 public class ChatAdvisorTest {
@@ -29,6 +30,9 @@ public class ChatAdvisorTest {
     private ChatClient.Builder builder;
 
     private ChatClient client;
+
+    @Autowired
+    public PromptGuardAdvisor promptGuardAdvisor;
 
     @Autowired
     private SimpleLoggerAdvisor simpleLoggerAdvisor;
@@ -46,12 +50,24 @@ public class ChatAdvisorTest {
     public void syncChatWithLogging() {
         val userPrompt = "你好";
         log.info("request userPrompt: {}", userPrompt);
-
         val content = client.prompt(userPrompt)
                 .advisors(simpleLoggerAdvisor)
                 .call()
                 .content();
         log.info("response content: {}", content);
+    }
+
+    @Test
+    public void syncChatWithPromptGuard() throws InterruptedException {
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            val userPrompt = "hello , 你是誰?";
+            log.info("request userPrompt: {}", userPrompt);
+            val content = client.prompt(userPrompt)
+                    .advisors(promptGuardAdvisor)
+                    .call()
+                    .content();
+            log.info("response content: {}", content);
+        }, "訊息包含 hello 才會被阻擋");
     }
 
     @Test
