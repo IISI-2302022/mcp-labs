@@ -117,6 +117,7 @@ public class ChatAdvisorTest {
     }
 
 
+    // todo 5/8 沒講到 , 可以補講
     @Test
     public void syncChatForEntityWithErrorRetry() {
         val parameterizedTypeReference = new ParameterizedTypeReference<List<ActorFilms>>() {
