@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "67b940f6-02cd-4bf8-959f-c78a0e2ae958",
+    "_postman_id": "59f02d7d-12bf-4a62-87df-0e9bdfb5b677",
     "name": "mcp-labs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "3498730"
@@ -205,49 +205,59 @@
       "name": "oauth2",
       "item": [
         {
-          "name": "auth_code",
+          "name": "auth_code_keycloak",
           "item": [],
           "auth": {
             "type": "oauth2",
             "oauth2": [
               {
-                "key": "refreshTokenUrl",
-                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "key": "tokenName",
+                "value": "KeycloakAuthCodeToken",
+                "type": "string"
+              },
+              {
+                "key": "client_authentication",
+                "value": "body",
                 "type": "string"
               },
               {
                 "key": "scope",
-                "value": "",
-                "type": "string"
-              },
-              {
-                "key": "state",
-                "value": "random_number",
-                "type": "string"
-              },
-              {
-                "key": "clientSecret",
-                "value": "OAsvrq0eNk07uGnCmlqRdGkfysNwrwTX",
-                "type": "string"
-              },
-              {
-                "key": "clientId",
-                "value": "mcp-client",
+                "value": "{{keycloak_scope}}",
                 "type": "string"
               },
               {
                 "key": "accessTokenUrl",
-                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "value": "{{keycloak_token_url}}",
+                "type": "string"
+              },
+              {
+                "key": "refreshTokenUrl",
+                "value": "{{keycloak_token_url}}",
+                "type": "string"
+              },
+              {
+                "key": "useBrowser",
+                "value": true,
+                "type": "boolean"
+              },
+              {
+                "key": "state",
+                "value": "{{keycloak_state}}",
+                "type": "string"
+              },
+              {
+                "key": "clientSecret",
+                "value": "{{keycloak_client_secret}}",
+                "type": "string"
+              },
+              {
+                "key": "clientId",
+                "value": "{{keycloak_client_id}}",
                 "type": "string"
               },
               {
                 "key": "authUrl",
-                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/auth",
-                "type": "string"
-              },
-              {
-                "key": "tokenName",
-                "value": "AuthCodeToken",
+                "value": "{{keycloak_auth_url}}",
                 "type": "string"
               },
               {
@@ -283,14 +293,164 @@
           ]
         },
         {
-          "name": "client_credentials",
+          "name": "auth_code_google",
+          "item": [
+            {
+              "name": "google_people_api",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos",
+                  "protocol": "https",
+                  "host": [
+                    "people",
+                    "googleapis",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "people",
+                    "me"
+                  ],
+                  "query": [
+                    {
+                      "key": "personFields",
+                      "value": "names,emailAddresses,photos"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "oauth2",
+            "oauth2": [
+              {
+                "key": "tokenName",
+                "value": "GoogleAuthCodeToken",
+                "type": "string"
+              },
+              {
+                "key": "accessTokenUrl",
+                "value": "{{google_token_url}}",
+                "type": "string"
+              },
+              {
+                "key": "refreshTokenUrl",
+                "value": "{{google_token_url}}",
+                "type": "string"
+              },
+              {
+                "key": "client_authentication",
+                "value": "body",
+                "type": "string"
+              },
+              {
+                "key": "state",
+                "value": "{{google_state}}",
+                "type": "string"
+              },
+              {
+                "key": "scope",
+                "value": "{{google_scope}}",
+                "type": "string"
+              },
+              {
+                "key": "authUrl",
+                "value": "{{google_auth_url}}",
+                "type": "string"
+              },
+              {
+                "key": "clientSecret",
+                "value": "{{google_client_secret}}",
+                "type": "string"
+              },
+              {
+                "key": "clientId",
+                "value": "{{google_client_id}}",
+                "type": "string"
+              },
+              {
+                "key": "authRequestParams",
+                "value": [
+                  {
+                    "key": "access_type",
+                    "value": "offline",
+                    "enabled": true,
+                    "send_as": "request_url"
+                  },
+                  {
+                    "key": "prompt",
+                    "value": "consent",
+                    "enabled": true,
+                    "send_as": "request_url"
+                  }
+                ],
+                "type": "any"
+              },
+              {
+                "key": "useBrowser",
+                "value": true,
+                "type": "boolean"
+              },
+              {
+                "key": "addTokenTo",
+                "value": "header",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "client_credentials_keycloak",
           "item": [],
           "auth": {
             "type": "oauth2",
             "oauth2": [
               {
+                "key": "scope",
+                "value": "",
+                "type": "string"
+              },
+              {
                 "key": "refreshTokenUrl",
-                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
+                "value": "{{keycloak_token_url}}",
+                "type": "string"
+              },
+              {
+                "key": "client_authentication",
+                "value": "body",
+                "type": "string"
+              },
+              {
+                "key": "accessTokenUrl",
+                "value": "{{keycloak_token_url}}",
                 "type": "string"
               },
               {
@@ -301,11 +461,6 @@
               {
                 "key": "clientId",
                 "value": "mcp-client",
-                "type": "string"
-              },
-              {
-                "key": "accessTokenUrl",
-                "value": "http://localhost:8080/realms/mcp/protocol/openid-connect/token",
                 "type": "string"
               },
               {
@@ -375,6 +530,80 @@
           }
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "keycloak_auth_url",
+      "value": ""
+    },
+    {
+      "key": "keycloak_token_url",
+      "value": ""
+    },
+    {
+      "key": "keycloak_client_id",
+      "value": ""
+    },
+    {
+      "key": "keycloak_client_secret",
+      "value": ""
+    },
+    {
+      "key": "keycloak_state",
+      "value": ""
+    },
+    {
+      "key": "keycloak_scope",
+      "value": ""
+    },
+    {
+      "key": "google_auth_url",
+      "value": ""
+    },
+    {
+      "key": "google_token_url",
+      "value": ""
+    },
+    {
+      "key": "google_client_id",
+      "value": ""
+    },
+    {
+      "key": "google_client_secret",
+      "value": ""
+    },
+    {
+      "key": "google_scope",
+      "value": ""
+    },
+    {
+      "key": "google_state",
+      "value": ""
     }
   ]
 }
