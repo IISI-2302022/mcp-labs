@@ -32,9 +32,14 @@ public class McpSecurityConfig {
     SecurityFilterChain securityFilterChain(
             HttpSecurity http
             , @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUrl
-            , BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint)
+//            , BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint
+    )
             throws Exception {
-        return http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+        return http.authorizeHttpRequests(
+                        auth ->
+                                auth.requestMatchers("/h2-console/**").permitAll()
+                                        .anyRequest().authenticated()
+                )
                 .with(mcpServerOAuth2(), (mcpServerOAuth2Configurer) ->
                         mcpServerOAuth2Configurer
                                 .oauth2ResourceServer((oAuth2ResourceServerConfigurer) ->
@@ -42,7 +47,7 @@ public class McpSecurityConfig {
                                                 .jwt((jwtConfigurer) -> jwtConfigurer
                                                         .jwtAuthenticationConverter(myJwtAuthenticationConverter)
                                                 )
-                                                .authenticationEntryPoint(bearerResourceMetadataTokenAuthenticationEntryPoint)
+//                                                .authenticationEntryPoint(bearerResourceMetadataTokenAuthenticationEntryPoint)
                                 )
                                 .authorizationServer(issuerUrl)
                                 .resourcePath("/mcp")
@@ -69,16 +74,16 @@ public class McpSecurityConfig {
         return source;
     }
 
-    @Bean
-    public BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint() throws NoSuchFieldException, IllegalAccessException {
-        val bearerTokenAuthenticationEntryPoint = new BearerTokenAuthenticationEntryPoint();
-        bearerTokenAuthenticationEntryPoint.setRealmName("mcp");
-        val bearerResourceMetadataTokenAuthenticationEntryPoint = new BearerResourceMetadataTokenAuthenticationEntryPoint(new ResourceIdentifier("/mcp"));
-        val aClass = bearerResourceMetadataTokenAuthenticationEntryPoint.getClass();
-        val declaredField = aClass.getDeclaredField("delegate");
-        declaredField.setAccessible(true);
-        declaredField.set(bearerResourceMetadataTokenAuthenticationEntryPoint, bearerTokenAuthenticationEntryPoint);
-        return bearerResourceMetadataTokenAuthenticationEntryPoint;
-    }
+//    @Bean
+//    public BearerResourceMetadataTokenAuthenticationEntryPoint bearerResourceMetadataTokenAuthenticationEntryPoint() throws NoSuchFieldException, IllegalAccessException {
+//        val bearerTokenAuthenticationEntryPoint = new BearerTokenAuthenticationEntryPoint();
+//        bearerTokenAuthenticationEntryPoint.setRealmName("mcp");
+//        val bearerResourceMetadataTokenAuthenticationEntryPoint = new BearerResourceMetadataTokenAuthenticationEntryPoint(new ResourceIdentifier("/mcp"));
+//        val aClass = bearerResourceMetadataTokenAuthenticationEntryPoint.getClass();
+//        val declaredField = aClass.getDeclaredField("delegate");
+//        declaredField.setAccessible(true);
+//        declaredField.set(bearerResourceMetadataTokenAuthenticationEntryPoint, bearerTokenAuthenticationEntryPoint);
+//        return bearerResourceMetadataTokenAuthenticationEntryPoint;
+//    }
 }
 
